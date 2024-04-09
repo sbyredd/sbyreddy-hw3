@@ -1,35 +1,40 @@
-function searchDictionary() {
-    const query = document.getElementById("searchInput").value.trim();
-    if (query === "") {
-        alert("Please enter a word to search.");
+const wordInput = document.getElementById('wordInput');
+const definitionList = document.getElementById('definitionList');
+
+wordInput.addEventListener('input', fetchDefinitions);
+
+async function fetchDefinitions() {
+    const word = wordInput.value.trim();
+    if (word === '') {
+        definitionList.innerHTML = '';
         return;
     }
-    
-    fetch(https,//api.dictionaryapi.dev/api/v2/entries/en/${query})
-        then(response => response.json())
-        .then(data => displayMeanings(data))
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            alert("An error occurred. Please try again later.");
-        });
-}
 
-function displayMeanings(data) {
-    const meaningsDiv = document.getElementById("meanings");
-    meaningsDiv.innerHTML = ""; // Clear previous search results
-    
-    data.forEach(entry => {
-        const word = entry.word;
-        const meanings = entry.meanings.map(meaning => {
-            return <li>${meaning.partOfSpeech}: ${meaning.definitions[0].definition}</li>;
-        }).join("");
-        
-        const html = `
-            <div class="word">
-                <h2>${word}</h2>
-                <ul>${meanings}</ul>
-            </div>
-        `;
-        meaningsDiv.innerHTML += html;
-    });
+    const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        definitionList.innerHTML = '';
+        data.forEach(entry => {
+            const meanings = entry.meanings;
+            meanings.forEach(meaning => {
+                const partOfSpeech = meaning.partOfSpeech;
+                const definitions = meaning.definitions;
+
+                const partOfSpeechItem = document.createElement('li');
+                partOfSpeechItem.textContent = `(${partOfSpeech})`;
+                definitionList.appendChild(partOfSpeechItem);
+
+                definitions.forEach(definition => {
+                    const definitionItem = document.createElement('li');
+                    definitionItem.textContent = definition.definition;
+                    definitionList.appendChild(definitionItem);
+                });
+            });
+        });
+    } catch (error) {
+        console.error('Error fetching definitions:', error);
+        definitionList.innerHTML = '<li>Error fetching definitions.</li>';
+    }
 }

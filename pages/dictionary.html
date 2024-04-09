@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dictionary</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title> Byreddy - Dictionary</title>
+    <link rel="stylesheet" href="../css/Style.css">
+    <script src="../js/dictionary.js" defer></script>
 </head>
+
 <body>
     <header>
-        <h1>Dictionary</h1>
-    <ul>
-        <li><a href="index.html">{Home}</a></li>
+        <nav>
+            <p>Dictionary</p>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
                 
-        <li><a href="pages/blog.html">{Blog}</a></li>
-        
-        <li><a href="pages/about.html">{About}</a></li>
-    </ul>
-    <nav>
+                <li><a href="blog.html">Blog</a></li>
+                
+                <li><a href="about.html">About</a></li>
 
-    </nav>
-</header>
+                <li><a href="dictionary.html">Dictionary</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Enter a word,e.g., tea">
-            <button onclick="searchDictionary()">Search</button>
+        <div id="container">
+            <input type="text" id="wordInput" placeholder="Enter a word">
         </div>
-        <div id="meanings"></div>
+            <ol id="definitionList"></ol>
     </main>
-    <script src="dictionary.js"></script>
+    <footer>
+        <p>Copyright&copy; 2024 Sireesha</p>
+    </footer>
 </body>
+
 </html>
